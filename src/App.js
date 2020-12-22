@@ -13,15 +13,16 @@ import 'antd/dist/antd.css';
 
 import { Button, Card, Col, Row, Spin } from 'antd';
 
-function getUsername(isSuccess = 1) {
+function getUsername({ flag = 1 }) {
   return new Promise((resolve, reject) => {
     const val = Mock.mock('@name');
     console.log(val, 'valvalval');
 
     setTimeout(() => {
-      if (isSuccess) {
+      if (flag) {
         resolve(val);
       }
+
       reject(val);
     }, 1000);
   });
@@ -45,8 +46,10 @@ function App() {
   useEffect(() => {
     if (first) return;
 
-    flag && run(flag);
-    !flag && failRun(flag);
+    console.log(flag, '777', !flag)
+
+    flag && run({ flag });
+    !flag && failRun({ flag });
   }, [flag]);
 
   useEffect(() => {
@@ -59,7 +62,7 @@ function App() {
         <Button
           type="primary"
           onClick={() => setFlag(Math.floor(Math.random() * (100 - 1)) + 1)}
-          // loading={loading}
+        // loading={loading}
         >
           成功
         </Button>

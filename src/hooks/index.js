@@ -41,6 +41,10 @@ export const useAsync = (asyncFunction, options = {}) => {
   };
 
   useEffect(() => {
+    if (!useManual) {
+      return;
+    }
+
     fun();
 
     return () => {
@@ -68,7 +72,9 @@ export const useAsync = (asyncFunction, options = {}) => {
       return;
     }
 
-    setParams(params);
+    console.log(params, 'paramsparams')
+
+    setParams(JSON.parse(JSON.stringify(params)));
   };
 
   return { data: value, loading, error, run };

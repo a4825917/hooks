@@ -1,14 +1,18 @@
-/*
- * @Author: your name
- * @Date: 2020-12-22 15:41:54
- * @LastEditTime: 2020-12-22 18:11:04
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \hooks\src\hooks\index.js
- *
- * https://zhuanlan.zhihu.com/p/141673983
+/* eslint-disable */
+/**
+ * useAsync 管理异步方法的 Hook
+ * @param  asyncFunction  请求的 Promise
+ * @param { options } 
+ * @param options -> onSuccess  请求成功的回调
+ * @param options -> onError  请求失败的回调
+ * @param options -> manual  是否第一次进入时加载
+ * 
+ * @result data 成功
+ * @result error 失败
+ * @result run(param) 执行方法
+ * @result loading loading 
  */
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export const useAsync = (asyncFunction, options = {}) => {
   const [value, setValue] = useState(null);
@@ -17,12 +21,12 @@ export const useAsync = (asyncFunction, options = {}) => {
   const { manual = true, onSuccess, onError } = options;
   const [useManual, setManual] = useState(manual);
   const [params, setParams] = useState({});
-  const count = useRef(0);
+  const count = useRef(0);  // ref对象的值发生改变之后，不会触发组件重新渲染，他可以作为任何值的容器
 
   const fun = () => {
     setLoading(true);
-    console.log('??????????');
     const currentCount = count.current;
+
     asyncFunction(params)
       .then((response) => {
         if (currentCount !== count.current) return;
@@ -36,6 +40,7 @@ export const useAsync = (asyncFunction, options = {}) => {
         onError && onError(error, params);
       })
       .finally(() => {
+        if (currentCount !== count.current) return;
         setLoading(false);
       });
   };
@@ -44,6 +49,8 @@ export const useAsync = (asyncFunction, options = {}) => {
     if (!useManual) {
       return;
     }
+
+
 
     fun();
 
@@ -72,7 +79,7 @@ export const useAsync = (asyncFunction, options = {}) => {
       return;
     }
 
-    console.log(params, 'paramsparams')
+    console.log(params.flag, 'params---------------')
 
     setParams(JSON.parse(JSON.stringify(params)));
   };

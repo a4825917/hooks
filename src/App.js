@@ -1,95 +1,41 @@
-/*
- * @Author: your name
- * @Date: 2020-12-22 15:37:22
- * @LastEditTime: 2020-12-22 18:10:26
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \hooks\src\App.js
- */
-import { useAsync } from './hooks';
-import Mock from 'mockjs';
+
+/* eslint-disable */
 import React, { useState, useEffect, useCallback } from 'react';
 import 'antd/dist/antd.css';
-
-import { Button, Card, Col, Row, Spin } from 'antd';
-
-function getUsername({ flag = 1 }) {
-  return new Promise((resolve, reject) => {
-    const val = Mock.mock('@name');
-    console.log(val, 'valvalval');
-
-    setTimeout(() => {
-      if (flag) {
-        resolve(val);
-      }
-
-      reject(val);
-    }, 1000);
-  });
-}
+import { Menu } from 'antd';
+import UseAsync from './UseAsync';
+import Hooks from "./Hooks";
+import UseEventListener from "./UseEventListener";
+import style from "./index.css";
 
 function App() {
-  const [flag, setFlag] = useState();
-  const { data, error, run, loading } = useAsync(getUsername, {
-    onSuccess: (data, params) => {
-      console.log(data, '----------------------onSuccess');
-    },
-  });
-  const [first, setFirst] = useState(1);
-  const {
-    data: failData,
-    error: failErr,
-    run: failRun,
-    loading: failLoad,
-  } = useAsync(getUsername);
+  const [current, setCurrent] = useState('useAsync')
 
-  useEffect(() => {
-    if (first) return;
-
-    console.log(flag, '777', !flag)
-
-    flag && run({ flag });
-    !flag && failRun({ flag });
-  }, [flag]);
-
-  useEffect(() => {
-    setFirst(0);
-  }, []);
+  const handleClick = e => {
+    setCurrent(e.key)
+  };
 
   return (
     <div>
-      <>
-        <Button
-          type="primary"
-          onClick={() => setFlag(Math.floor(Math.random() * (100 - 1)) + 1)}
-        // loading={loading}
-        >
-          成功
-        </Button>
-        <Button type="primary" loading={failLoad} onClick={() => setFlag(0)}>
-          失败
-        </Button>
-      </>
-      <div className="site-card-wrapper">
-        <Row gutter={16}>
-          <Col span={8}>
-            <Spin tip="Loading..." spinning={loading}>
-              <Card title="成功" bordered={false}>
-                {data}
-              </Card>
-            </Spin>
-          </Col>
+      <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+        <Menu.Item key="useAsync">
+          useAsync
+        </Menu.Item>
+        <Menu.Item key="hooks" >
+          hooks 小知识
+        </Menu.Item>
+        <Menu.Item key="useEventListener" >
+          UseEventListener
+        </Menu.Item>
+      </Menu>
+      <div style={{ padding: '50px' }}>
+        {current === 'useAsync' && <UseAsync />}
 
-          <Col span={8}>
-            <Spin tip="Loading..." spinning={failLoad}>
-              <Card title="失败" bordered={false}>
-                {failErr}
-              </Card>
-            </Spin>
-          </Col>
-        </Row>
+        {current === 'hooks' && <Hooks />}
+        {current === 'useEventListener' && <UseEventListener />}
       </div>
-    </div>
+
+    </div >
   );
 }
 

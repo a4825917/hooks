@@ -5,7 +5,7 @@
  * 
  * 比如 TAB 页、按钮重复点击请求数据
  */
-import { useAsync } from './hooks/useAsync';
+import useAsync from './hooks/useAsync';
 import Mock from 'mockjs';
 import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';

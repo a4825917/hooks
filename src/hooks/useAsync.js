@@ -14,7 +14,7 @@
  */
 import { useState, useEffect, useRef } from 'react';
 
-export const useAsync = (asyncFunction, options = {}) => {
+export default useAsync = (asyncFunction, options = {}) => {
   const [value, setValue] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

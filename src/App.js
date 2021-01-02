@@ -4,12 +4,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import 'antd/dist/antd.css';
 import { Menu } from 'antd';
 import UseAsync from './UseAsync';
-import Hooks from "./Hooks";
+import CountDown from "./CountDown";
+import HookDemo from "./HookDemo";
 import UseEventListener from "./UseEventListener";
-import style from "./index.css";
 
 function App() {
-  const [current, setCurrent] = useState('useAsync')
+  const [current, setCurrent] = useState('hooks')
 
   const handleClick = e => {
     setCurrent(e.key)
@@ -18,11 +18,14 @@ function App() {
   return (
     <div>
       <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-        <Menu.Item key="useAsync">
-          useAsync
-        </Menu.Item>
         <Menu.Item key="hooks" >
           hooks 小知识
+        </Menu.Item>
+        <Menu.Item key="countDown" >
+          倒计时
+        </Menu.Item>
+        <Menu.Item key="useAsync">
+          useAsync
         </Menu.Item>
         <Menu.Item key="useEventListener" >
           UseEventListener
@@ -30,8 +33,8 @@ function App() {
       </Menu>
       <div style={{ padding: '50px' }}>
         {current === 'useAsync' && <UseAsync />}
-
-        {current === 'hooks' && <Hooks />}
+        {current === 'countDown' && <CountDown />}
+        {current === 'hooks' && <HookDemo />}
         {current === 'useEventListener' && <UseEventListener />}
       </div>
 

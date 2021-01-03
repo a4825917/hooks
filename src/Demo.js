@@ -21,14 +21,9 @@ function getUsername({ flag = 1 }) {
 class Demo extends Component {
     constructor(props) {
         super(props);
-        const { useAsync } = props
 
         console.log(props)
         this.state = {};
-
-        // this.getUsernameFn = useAsync(getUsername, {
-        //     manual: false,
-        // })
     }
 
     handleGet() {

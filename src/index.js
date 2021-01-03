@@ -6,7 +6,7 @@ import App from './App';
 import Demo from './Demo'
 
 ReactDOM.render(
-  // <App />,
-  <Demo />,
+  <App />,
+  // <Demo />,
   document.getElementById('root')
 );

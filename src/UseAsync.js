@@ -31,7 +31,7 @@ function getUsername({ flag = 1 }) {
 function UseAsync() {
     const [flag, setFlag] = useState();
     const { data, error, run, loading } = useAsync(getUsername, {
-        manual: false,
+
         onSuccess: (data, params) => {
             console.log(data, '----------------------onSuccess', params);
         },
@@ -42,7 +42,7 @@ function UseAsync() {
         error: failErr,
         run: failRun,
         loading: failLoad,
-    } = useAsync(getUsername);
+    } = useAsync(getUsername, { manual: false, });
 
     useEffect(() => {
         if (first) return;

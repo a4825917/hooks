@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 
 export default function Effect() {
@@ -23,6 +22,10 @@ export default function Effect() {
         setTimeout(() => {
             console.log(`count1=======${count}----count2=======${count2}-----useRef====${latestCount.current}`)
         }, 3000);
+
+        return () => {
+            // 卸载时执行
+        }
     }, [count2])
 
     return <div>

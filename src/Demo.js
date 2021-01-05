@@ -1,23 +1,9 @@
 import React, { Component } from 'react';
 import BaseHOC from './components/BaseHOC';
-import Mock from 'mockjs';
 import { Modal } from 'antd';
+import Children from "./components/Children";
 
-function getUsername({ flag = 1 }) {
-    return new Promise((resolve, reject) => {
-        const val = Mock.mock('@name');
-
-        setTimeout(() => {
-            if (flag > 0) {
-                resolve(val);
-            }
-
-            reject(val);
-        }, 1000);
-    });
-}
-
-
+// Class 中使用 Hooks
 class Demo extends Component {
     constructor(props) {
         super(props);
@@ -31,18 +17,25 @@ class Demo extends Component {
     }
 
     render() {
-        const { changeVisible, visible } = this.props;
-        return (
-            <Modal
-                title="Basic Modal"
-                visible={visible}
-                onOk={this.handleGet}
-                onCancel={() => changeVisible(false)}
-            >
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Modal>
+        const { changeVisible, visible: hocVisible } = this.props;
+
+        return (<Children>
+            {(visible, setVisible) => <>
+                <Modal
+                    title="Modal"
+                    visible={visible}
+                    onOk={() => setVisible(false)}
+                    onCancel={() => setVisible(false)}
+                >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal>
+
+                <button onClick={() => setVisible(!visible)}>打开Modal</button>
+            </>
+            }
+        </Children>
         );
     }
 }

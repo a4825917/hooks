@@ -1,7 +1,9 @@
-import React, { useState, useMemo, useRef, } from 'react';
+import React, { useState, useMemo, useReducer } from 'react';
 import { message, Menu } from 'antd';
 import Callback from "./Callback";
 import Effect from "./Effect";
+import UseContext from "./UseContext";
+
 
 export default function HookDemo() {
     const [current, setCurrent] = useState('useEffect')
@@ -63,4 +65,43 @@ function Memo() {
 
 function MemoChild({ count }) {
     return <p>当前传递的count为:{count}</p>;
+}
+
+
+/**
+    useReducer 和 redux 中 reducer 很像
+    useState 内部就是靠 useReducer 来实现的
+    在某些场景下，useReducer 会比 useState 更适用，例如 state 逻辑较复杂且包含多个子值，或者下一个 state 依赖于之前的 state 等
+*/
+const initialState = 0;
+function reducer(state, action) {
+    state = {
+        ...state,
+        xxx: 123
+    }
+
+    switch (action.type) {
+        case 'increment':
+            return { ...state, number: state.number + 1 };
+        case 'decrement':
+            return { ...state, number: state.number - 1 };
+        default:
+            throw new Error();
+    }
+}
+
+function init(initialState) {
+    return { number: initialState + 5 };
+}
+
+function Counter() {
+    const [state, dispatch] = useReducer(reducer, initialState, init);
+    return (
+        <>
+            Count: {state.number}
+            {state.xxx}
+            <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+            <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+        </>
+    )
 }

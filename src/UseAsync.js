@@ -16,7 +16,7 @@ function getUsername({ flag = 1 }) {
     return new Promise((resolve, reject) => {
         const val = Mock.mock('@name');
 
-        console.log(val, 'val-------------------params', flag);
+        console.log(val, 'val-------------------params---', flag);
 
         setTimeout(() => {
             if (flag > 0) {
@@ -33,7 +33,7 @@ function UseAsync() {
     const { data, error, run, loading } = useAsync(getUsername, {
 
         onSuccess: (data, params) => {
-            console.log(data, '----------------------onSuccess', params);
+            console.log(data, 'onSuccess----------------------params', params.flag);
         },
     });
     const [first, setFirst] = useState(1); // 防止第一次执行
